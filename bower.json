@@ -1,0 +1,21 @@
+{
+  "name": "react-inputs",
+  "version": "0.0.1",
+  "homepage": "http://unger.software/react-inputs/",
+  "authors": [
+    "Erik Unger <erik@erikunger.com>"
+  ],
+  "description": "",
+  "main": "index.js",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

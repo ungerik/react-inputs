@@ -1,0 +1,35 @@
+{
+  "name": "react-inputs",
+  "version": "0.0.1",
+  "description": "Input components for react",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ungerik/react-inputs.git"
+  },
+  "author": "Erik Unger <erik@erikunger.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ungerik/react-inputs/issues"
+  },
+  "homepage": "http://unger.software/react-inputs/",
+  "dependencies": {
+	"babel-core": "^5.8.33",
+	"babel-eslint": "^4.1.3",
+	"babel-loader": "^5.3.3",
+	"eslint": "^1.7.3",
+	"eslint-plugin-babel": "^2.1.1",
+	"eslint-plugin-react": "^3.6.3",
+	"npm-check-updates": "^2.3.4",
+    "bower": "^1.5.3",
+    "glob": "^5.0.15",
+    "react": "^0.13.3",
+    "webpack": "^1.12.2"
+  }
+}
