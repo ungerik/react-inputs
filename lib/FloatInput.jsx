@@ -68,6 +68,7 @@ export default class FloatInput extends React.Component {
 		onChange: PropTypes.func,
 		inputClass: PropTypes.string,
 		labelClass: PropTypes.string,
+		wrapperClass: PropTypes.string,
 	};
 
 	static defaultProps = {
@@ -84,6 +85,7 @@ export default class FloatInput extends React.Component {
 		onChange: null,
 		inputClass: null,
 		labelClass: null,
+		wrapperClass: null,
 	};
 
 	trailingPoint = false;
@@ -144,7 +146,7 @@ export default class FloatInput extends React.Component {
 	render() {
 		if (this.props.label) {
 			return (
-				<div>
+				<div className={this.props.wrapperClass}>
 					<label className={this.props.labelClass}>{this.props.label}</label>
 					{this.renderInput()}
 				</div>
