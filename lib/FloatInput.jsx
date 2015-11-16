@@ -67,6 +67,7 @@ export default class FloatInput extends React.Component {
 		disabled: PropTypes.bool,
 		onChange: PropTypes.func,
 		inputClass: PropTypes.string,
+		labelClass: PropTypes.string,
 	};
 
 	static defaultProps = {
@@ -81,7 +82,8 @@ export default class FloatInput extends React.Component {
 		bsStyle: null,
 		disabled: false,
 		onChange: null,
-		inputClass: "form-control",
+		inputClass: null,
+		labelClass: null,
 	};
 
 	trailingPoint = false;
