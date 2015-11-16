@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropTypes} from "react";
 
 
 function fixDecimals(s, decimals) {
@@ -55,18 +55,22 @@ export default class FloatInput extends React.Component {
 	static displayName = "FloatInput";
 
 	static propTypes = {
-		value: React.PropTypes.number,
-		min: React.PropTypes.number,
-		max: React.PropTypes.number,
-		decimals: React.PropTypes.number,
-		label: React.PropTypes.string,
-		addonAfter: React.PropTypes.string,
-		bsStyle: React.PropTypes.oneOf(["success", "warning", "error"]),
-		disabled: React.PropTypes.bool,
-		onChange: React.PropTypes.func
+		size: PropTypes.number,
+		// maxLength: PropTypes.number,
+		value: PropTypes.number,
+		min: PropTypes.number,
+		max: PropTypes.number,
+		decimals: PropTypes.number,
+		label: PropTypes.string,
+		addonAfter: PropTypes.string,
+		bsStyle: PropTypes.oneOf(["success", "warning", "error"]),
+		disabled: PropTypes.bool,
+		onChange: PropTypes.func
 	};
 
 	static defaultProps = {
+		size: null,
+		// maxLength: null,
 		value: NaN,
 		min: -Number.MAX_VALUE,
 		max: +Number.MAX_VALUE,
@@ -111,6 +115,9 @@ export default class FloatInput extends React.Component {
 			value += "0";
 		}
 		value = fixDecimals(value, this.props.decimals);
+		// if (this.props.maxLength && value.length > this.props.maxLength) {
+		// 	value = value.substring(0, this.props.maxLength);
+		// }
 
 		const { label, addonAfter } = this.props;
 		const groupClass = "form-group" + (this.props.bsStyle ? " has-" + this.props.bsStyle : "");
@@ -122,12 +129,13 @@ export default class FloatInput extends React.Component {
 					<input
 						className="form-control"
 						type="number"
+						size={this.props.size}
 						value={value}
 						min={this.props.min}
 						max={this.props.max}
 						step={Math.pow(10, -this.props.decimals)}
 						label={label}
-						inputmode="numeric"
+						inputMode="numeric"
 						pattern="[\-\d\.]*"
 						title="Input must be a valid floating-point number"
 						disabled={this.props.disabled}

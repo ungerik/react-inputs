@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropTypes } from "react";
 
 
 function itoa(i) {
@@ -16,17 +16,21 @@ export default class UintInput extends React.Component {
 	static displayName = "UintInput";
 
 	static propTypes = {
-		value: React.PropTypes.number,
-		min: React.PropTypes.number,
-		max: React.PropTypes.number,
-		label: React.PropTypes.string,
-		addonAfter: React.PropTypes.string,
-		bsStyle: React.PropTypes.oneOf(["success", "warning", "error"]),
-		disabled: React.PropTypes.bool,
-		onChange: React.PropTypes.func
+		size: PropTypes.number,
+		// maxLength: PropTypes.number,
+		value: PropTypes.number,
+		min: PropTypes.number,
+		max: PropTypes.number,
+		label: PropTypes.string,
+		addonAfter: PropTypes.string,
+		bsStyle: PropTypes.oneOf(["success", "warning", "error"]),
+		disabled: PropTypes.bool,
+		onChange: PropTypes.func
 	};
 
 	static defaultProps = {
+		size: null,
+		// maxLength: null,
 		value: NaN,
 		min: 0,
 		max: Number.MAX_SAFE_INTEGER,
@@ -57,9 +61,10 @@ export default class UintInput extends React.Component {
 						type="number"
 						value={itoa(this.props.value)}
 						label={label}
+						size={this.props.size}
 						min={min}
 						max={max}
-						inputmode="numeric"
+						inputMode="numeric"
 						pattern="[0-9]*"
 						title={`Input must be a non-negative integral number from ${min} to ${max}`}
 						disabled={this.props.disabled}

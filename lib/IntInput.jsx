@@ -58,7 +58,7 @@ export default class IntInput extends React.Component {
 						label={label}
 						min={min}
 						max={max}
-						inputmode="numeric"
+						inputMode="numeric"
 						pattern="[\-\d]*"
 						title={`Input must be a non-negative integral number from ${min} to ${max}`}
 						disabled={this.props.disabled}
