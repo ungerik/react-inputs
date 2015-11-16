@@ -25,7 +25,9 @@ export default class UintInput extends React.Component {
 		addonAfter: PropTypes.string,
 		bsStyle: PropTypes.oneOf(["success", "warning", "error"]),
 		disabled: PropTypes.bool,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
+		inputClass: PropTypes.string,
+		labelClass: PropTypes.string,
 	};
 
 	static defaultProps = {
@@ -38,7 +40,9 @@ export default class UintInput extends React.Component {
 		addonAfter: null,
 		bsStyle: null,
 		disabled: false,
-		onChange: null
+		onChange: null,
+		inputClass: null,
+		labelClass: null,
 	};
 
 	onChange(event) {
@@ -47,32 +51,35 @@ export default class UintInput extends React.Component {
 		}
 	}
 
-	render() {
-		const groupClass = "form-group" + (this.props.bsStyle ? " has-" + this.props.bsStyle : "");
-		const { label, addonAfter } = this.props;
-		const min = Math.max(this.props.min, 0);
-		const max = Math.max(this.props.max, 0);
+	renderInput() {
 		return (
-			<div className={groupClass}>
-				{label ? <label className="control-label">{label}</label> : null}
-				<div className="input-group">
-					<input
-						className="form-control"
-						type="number"
-						value={itoa(this.props.value)}
-						label={label}
-						size={this.props.size}
-						min={min}
-						max={max}
-						inputMode="numeric"
-						pattern="[0-9]*"
-						title={`Input must be a non-negative integral number from ${min} to ${max}`}
-						disabled={this.props.disabled}
-						onChange={(event) => this.onChange(event)}
-					/>
-					{addonAfter ? <span className="input-group-addon">{addonAfter}</span> : null}
-				</div>
-			</div>
+			<input
+				className={this.props.inputClass}
+				type="number"
+				value={itoa(this.props.value)}
+				label={this.props.label}
+				size={this.props.size}
+				min={Math.max(this.props.min, 0)}
+				max={Math.max(this.props.max, 0)}
+				inputMode="numeric"
+				pattern="[0-9]*"
+				title={`Input must be a non-negative integral number from ${this.props.min} to ${this.props.max}`}
+				disabled={this.props.disabled}
+				onChange={(event) => this.onChange(event)}
+			/>
 		);
+	}
+
+	render() {
+		if (this.props.label) {
+			return (
+				<div>
+					<label className={this.props.labelClass}>{this.props.label}</label>
+					{this.renderInput()}
+				</div>
+			);
+		} else {
+			return this.renderInput();
+		}
 	}
 }

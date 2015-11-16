@@ -65,7 +65,8 @@ export default class FloatInput extends React.Component {
 		addonAfter: PropTypes.string,
 		bsStyle: PropTypes.oneOf(["success", "warning", "error"]),
 		disabled: PropTypes.bool,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
+		inputClass: PropTypes.string,
 	};
 
 	static defaultProps = {
@@ -79,7 +80,8 @@ export default class FloatInput extends React.Component {
 		addonAfter: null,
 		bsStyle: null,
 		disabled: false,
-		onChange: null
+		onChange: null,
+		inputClass: "form-control",
 	};
 
 	trailingPoint = false;
@@ -106,7 +108,7 @@ export default class FloatInput extends React.Component {
 		}
 	}
 
-	render() {
+	renderInput() {
 		let value = ftoa(this.props.value, this.props.decimals);
 		if (this.trailingPoint) {
 			value += ".";
@@ -118,32 +120,35 @@ export default class FloatInput extends React.Component {
 		// if (this.props.maxLength && value.length > this.props.maxLength) {
 		// 	value = value.substring(0, this.props.maxLength);
 		// }
-
-		const { label, addonAfter } = this.props;
-		const groupClass = "form-group" + (this.props.bsStyle ? " has-" + this.props.bsStyle : "");
-
 		return (
-			<div className={groupClass}>
-				{label ? <label className="control-label">{label}</label> : null}
-				<div className="input-group">
-					<input
-						className="form-control"
-						type="number"
-						size={this.props.size}
-						value={value}
-						min={this.props.min}
-						max={this.props.max}
-						step={Math.pow(10, -this.props.decimals)}
-						label={label}
-						inputMode="numeric"
-						pattern="[\-\d\.]*"
-						title="Input must be a valid floating-point number"
-						disabled={this.props.disabled}
-						onChange={(event) => this.onChange(event)}
-					/>
-					{addonAfter ? <span className="input-group-addon">{addonAfter}</span> : null}
-				</div>
-			</div>
+			<input
+				className={this.props.inputClass}
+				type="number"
+				size={this.props.size}
+				value={value}
+				min={this.props.min}
+				max={this.props.max}
+				step={Math.pow(10, -this.props.decimals)}
+				label={this.props.label}
+				inputMode="numeric"
+				pattern="[\-\d\.]*"
+				title="Input must be a valid floating-point number"
+				disabled={this.props.disabled}
+				onChange={(event) => this.onChange(event)}
+			/>
 		);
+	}
+
+	render() {
+		if (this.props.label) {
+			return (
+				<div>
+					<label className={this.props.labelClass}>{this.props.label}</label>
+					{this.renderInput()}
+				</div>
+			);
+		} else {
+			return this.renderInput();
+		}
 	}
 }
