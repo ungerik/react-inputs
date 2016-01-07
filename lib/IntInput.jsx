@@ -1,4 +1,4 @@
-import React, { PropTypes} from "react";
+import React, { PropTypes } from "react";
 
 
 function itoa(i) {
@@ -43,6 +43,7 @@ export default class IntInput extends React.Component {
 	};
 
 	onChange(event) {
+		// TODO: handle value not in range of min max. Neets temporary state
 		if (this.props.onChange) {
 			this.props.onChange(atoi(event.target.value));
 		}

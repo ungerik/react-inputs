@@ -1,40 +1,39 @@
-import React, { PropTypes} from "react";
+import React, { PropTypes } from "react";
 
 
 function fixDecimals(s, decimals) {
-	if (s.length > 0) {
-		let p = s.indexOf(".");
-		if (decimals > 0) {
-			p += 1 + decimals;
-		}
-		s = s.substring(0, p);
+	const p = s.indexOf(".");
+	if (p === -1) {
+		return s;
 	}
-	return s;
+
+	return s.substr(0, p + decimals + 1);
 }
 
 
 function fixFloatString(s, decimals) {
-	if (s.length > 0) {
-		// Remove all non valid number characters
-		s = s.replace(/[^\-\.\,\d]/g, "");
-
-		// Replace comma with point
-		s = s.replace(/[\,]/g, ".");
-
-		// Remove all but leading "-"
-		s = s.substring(0, 1) + s.substring(1).replace(/\-/g, "");
-
-		// Remove all but first "."
-		let p = s.indexOf(".");
-		if (p !== -1) {
-			p++;
-			s = s.substring(0, p) + s.substring(p).replace(/\./g, "");
-		}
-
-		// Remove extra decimal digits
-		s = fixDecimals(s, decimals);
+	if (s.length === 0) {
+		return s;
 	}
-	return s;
+
+	// Remove all non valid number characters
+	s = s.replace(/[^\-\.\,\d]/g, "");
+
+	// Replace comma with point
+	s = s.replace(/[\,]/g, ".");
+
+	// Remove all but leading "-"
+	s = s.substring(0, 1) + s.substring(1).replace(/\-/g, "");
+
+	// Remove all but first "."
+	let p = s.indexOf(".");
+	if (p !== -1) {
+		p++;
+		s = s.substring(0, p) + s.substring(p).replace(/\./g, "");
+	}
+
+	// Remove extra decimal digits
+	return fixDecimals(s, decimals);
 }
 
 
@@ -99,14 +98,22 @@ export default class FloatInput extends React.Component {
 			this.trailingZeros = 0;
 		} else {
 			this.trailingZeros = 0;
-			for (let i = s.length - 1; i > p && s.charAt(i) === "0"; i--) {
+			for (let i = s.length - 1; i > p && s[i] === "0"; i--) {
 				this.trailingZeros++;
 			}
 			this.trailingPoint = s.length - 1 - this.trailingZeros === p;
 		}
 
-		const value = atof(s, this.props.decimals);
-		// console.log(`onChange("${s}") -> ${value}`);
+		let value = atof(s, this.props.decimals);
+		if (value > this.props.max || value < this.props.min) {
+			// If new value is outside of min max range
+			// ignore the input and use old value:
+			value = this.props.value;
+			// Just to make sure in case the old value was outside of range:
+			value = Math.min(this.props.max, value);
+			value = Math.max(this.props.min, value);
+		}
+
 		if (this.props.onChange) {
 			this.props.onChange(value);
 		}
